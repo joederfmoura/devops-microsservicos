@@ -67,7 +67,7 @@ Use os endereços abaixo para acessar as aplicações pelo proxy
 |----------------|-------------------------------|-----------------------------|
 |Dashboard do Traefik|http://monitor.localhost            |u: admin p: admin             |
 |Blog          |http://blog.localhost            |         		   |
-|Dashes          |http://db-admin.localhost/|					|
+| DB Admin          |http://db-admin.localhost/|			servidor: `mysql` usuário: `root` senha: `password`		|
 
 
 ## Conclusão
