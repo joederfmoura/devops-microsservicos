@@ -25,9 +25,34 @@ Para aplicar o cenário proposto, é necessário o seguinte:
 $ git clone https://github.com/joederfmoura/devops-microsservicos.git
 ```
 
+## 2 - Preparando e Executando o Traefik
+Será criada uma rede do Docker para o proxy encaminhar o tráfego para os containers. A rede do Docker será necessária para conectar o traefik com aplicações que são executadas usando o Docker Compose. A rede será chamada de `web`.
+
+````bash
+$ docker network create web
+````
+
+Crie o container Traefik com este comando:
+
+````bash
+$ docker run -d \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v $PWD/traefik.toml:/traefik.toml \
+  -p 80:80 \
+  -p 443:443 \
+  -l traefik.frontend.rule=Host:monitor.localhost \
+  -l traefik.port=8080 \
+  --network web \
+  --name traefik \
+  traefik:1.7.2-alpine
+````
+
+Acesse o endereço http://monitor.localhost e explore o Dashboard. Use as credenciais u:`admin` p:`admin`
+
+
 ## 2 - Executando os containers
 
-Execute o compando abaixo para executar os containers.
+Execute o comando abaixo para executar os containers.
 ````bash
 $ docker compose up -d
 ````
@@ -36,7 +61,7 @@ Pode levar alguns segundos para que as aplicações fiquem disponíveis para ace
 
 ## 3 - Acessando as aplicaçoes
 
-You can rename the current file by clicking the file name in the navigation bar or by clicking the **Rename** button in the file explorer.
+Use os endereços abaixo para acessar as aplicações pelo proxy
 
 |Aplicação                |Endereço                          |Credenciais de Acesso                       |
 |----------------|-------------------------------|-----------------------------|
